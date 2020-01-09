@@ -1,21 +1,26 @@
 import csv;
 import sys;
+import os
+os.chdir("boa")
+
 def boa_csv(filename):
     card_ending=filename[-8:-4]
     results = []
     with open(filename,'r') as csvinput:
-        with open('output.csv', 'w') as csvoutput:
+        with open('new_'+filename, 'w') as csvoutput:
             writer = csv.writer(csvoutput, lineterminator='\n')
             reader = csv.reader(csvinput)
-
 
             all = []
             row = next(reader)
             row.append('Category')
+            row.append('Account')
             all.append(row)
 
             for row in reader:
+                row[4]=-float(row[4])
                 row.append(to_category(row[2]))
+                row.append("BOA_"+card_ending)
                 all.append(row)
 
             writer.writerows(all)
@@ -26,12 +31,12 @@ def boa_csv(filename):
 
 def to_category(description):
     dic={
-    "Merchandise & Supplies-Groceries" : ["SAFEWAY","SUPERMARKET","WHOLEFOODS","MARKET","HELLOFRESH","WAL-MART","DAISO","JL PRODUCE","99 RANCH","ROSS STORES","7-ELEVEN","MITSUWA","MARSHALLS","WHOLEFDS"],
-    "Dinning":["IN N OUT BURGER","MAISON ALYZEE","PARIS BAGUETTE","K-POT & GRILL","GRILL","RAMEN","HOUSE","CRAB"],
+    "Groceries" : ["SAFEWAY","SUPERMARKET","WHOLEFOODS","MARKET","HELLOFRESH","WAL-MART","DAISO","JL PRODUCE","99 RANCH","ROSS STORES","7-ELEVEN","MITSUWA","MARSHALLS","WHOLEFDS"],
+    "Dinning Out":["IN N OUT BURGER","MAISON ALYZEE","PARIS BAGUETTE","K-POT & GRILL","GRILL","RAMEN","HOUSE","CRAB"],
     "Coffee":["PEET'S","STARBUCKS","COFFEE","SUBWAY","CHIPOTLE","THAI","CAFFE","HUNAN"],
     "Transportation":["VALERO","CARNICERIA","UBER","LYFT"],
     "Pets" : ["CHEWY","PETCO","ANIMAL"],
-    "Clothing" :["ASOS","ZARA","NIKE","HM","ConverseUS","PATAGONIADIRECTINC","UNDER ARMOUR DIRECT","EASY SPIRIT","MACY","UNIQLO","GUCCI"],
+    "Clothes" :["ASOS","ZARA","NIKE","HM","ConverseUS","PATAGONIADIRECTINC","UNDER ARMOUR DIRECT","EASY SPIRIT","MACY","UNIQLO","GUCCI"],
     "Skin Care" : ["CLINIQUE","SHISEIDO","SEPHORA","NORDSTROM"],
     "Babys" :["TARGET","BABIES","CARTERS","THE HONEST COMPANY"],
     "Laundry":["WASH"],
@@ -50,4 +55,4 @@ def to_category(description):
             if i in description.upper():
                 return k
     
-boa_csv("December2019_7810.csv")
+boa_csv("combined_csv.csv")
