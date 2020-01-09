@@ -3,7 +3,7 @@ import os
 import glob
 import pandas as pd
 #set working directory
-os.chdir("boa")
+# os.chdir("boa")
 
 #find all csv files in the folder
 #use glob pattern matching -> extension = 'csv'
